@@ -9,4 +9,5 @@ add_executable(
         dataPulling.cpp
         dataPulling.h
         main.cpp
-        dataPulling.cpp)
+        dataPulling.cpp
+        minHeap.cpp)
