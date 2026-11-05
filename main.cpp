@@ -24,6 +24,16 @@ int main() {
         cout << vec[i] << " ";
     }
 
+    //sample scores just to test minHeap
+    vector<int> scores = {46, 90, 73, 82, 99, 46};
+    int k = 3;
+    vector<int> rankedSongs = topKByPopularity(scores, k);
+    cout<< "Top" << k << "songs:" << endl;
+    for (int rank = 0; rank < static_cast<int>(rankedSongs.size()); rank++) {
+        int index = rankedSongs[rank];
+        cout << rank + 1 << "Song index: " << index << "\nPopularity: " << scores[index] << endl;
+    }
+
     // Creating the welcome window
     // Reference: Used SFML documentation online to do user interface (https://www.sfml-dev.org/tutorials/3.1/)
     sf::RenderWindow welcomeWindow(sf::VideoMode({800, 680}), "Test Window");
@@ -170,16 +180,6 @@ int main() {
         }
 
         welcomeWindow.display(); // Need
-    }
-
-    //sample scores just to test minHeap
-    vector<int> scores = {46, 90, 73, 82, 99, 46};
-    int k = 3;
-    vector<int> rankedSongs = topKByPopularity(scores, k);
-    cout<< "Top" << k << "songs:" << endl;
-    for (int rank = 0; rank < static_cast<int>(rankedSongs.size()); rank++) {
-        int index = rankedSongs[rank];
-        cout << rank + 1 << "Song index: " << index << "\nPopularity: " << scores[index] << endl;
     }
 
     return 0;

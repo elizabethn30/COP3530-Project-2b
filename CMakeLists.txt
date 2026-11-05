@@ -17,7 +17,7 @@ add_executable(main
         dataPulling.h
         main.cpp
         dataPulling.cpp
-        minHeap.cpp)
+        minHeap.cpp
         mergeSort.cpp
         mergeSort.h)
 
