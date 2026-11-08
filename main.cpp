@@ -3,11 +3,8 @@
 #include "mergeSort.h"
 #include <iostream>
 #include <vector>
-#include "mergeSort.h"
-#include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-// #include <fstream>
 using namespace std;
 
 int main() {
@@ -95,8 +92,7 @@ int main() {
     goText.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
     goText.setPosition({650.f, 395.f});
 
-
-
+    // TODO: Make the user input box for user to type in genre they want
 
     while (welcomeWindow.isOpen()) { // Welcome window is open
 
@@ -108,6 +104,7 @@ int main() {
 
         welcomeWindow.clear(sf::Color::Black); // Need
 
+        // Draws everything onto the welcome window
         welcomeWindow.draw(titleText);
         welcomeWindow.draw(questionText);
         welcomeWindow.draw(goButton);
@@ -126,8 +123,6 @@ int main() {
 
         // Goes to next window if goButton pressed
         sf::FloatRect goButtonBounds = goButton.getGlobalBounds();
-        // sf::Vector2i mouseLocalPosition = sf::Mouse::getPosition(welcomeWindow); // Local position (relative to welcome window)
-
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && goButtonBounds.contains({float(mouseLocalPosition.x), float(mouseLocalPosition.y)})) {
             cout << "Button pressed in goButton bounds" << endl;
             // Draw genre window here (new window)
@@ -148,7 +143,7 @@ int main() {
             homeButton.setOrigin(sf::Vector2f({50.f, 100.f}));
             homeButton.setPosition({100.f, 650.f});
 
-            // Make genre window exit button (exits out of both genre window and welcome window)
+            // Make genre window exit button (will exit out of both genre window and welcome window)
             sf::RectangleShape exitGenreButton(sf::RectangleShape(sf::Vector2f(175.f, 75.f)));
             exitGenreButton.setFillColor(sf::Color::Green);
             exitGenreButton.setOrigin(sf::Vector2f({100.f, 100.f}));
@@ -231,7 +226,9 @@ int main() {
             line5.setFillColor(sf::Color::Black);
             line5.setPosition({130.f, 470.f});
 
-            while (genreWindow.isOpen()) {
+            // TODO: Draw the song name, score, and rank out onto the window
+
+            while (genreWindow.isOpen()) { // Genre window is open
                 welcomeWindow.setVisible(false);
 
                 while (const std::optional event = genreWindow.pollEvent()) { // Checks events
@@ -243,6 +240,7 @@ int main() {
 
                 genreWindow.clear(sf::Color::Black); // Need
 
+                // Draws everything onto the genre window
                 genreWindow.draw(genreTitle);
                 genreWindow.draw(homeButton);
                 genreWindow.draw(exitGenreButton);
