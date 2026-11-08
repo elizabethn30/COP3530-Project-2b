@@ -18,13 +18,13 @@ int main() {
         cout << first.title << ", " << first.artist << "..." << first.popularityScore << "-" << first.genre << endl;
     }
 
-    // Testing out the Merge Sort
-    MergeSort mergeTest;
-    vector<int> vec = {1,5,6,3,2,7};
-    mergeTest.mergeSort(vec, 0, vec.size()-1);
-    for (int i = 0; i < vec.size(); i++) {
-        cout << vec[i] << " ";
-    }
+    // // Testing out the Merge Sort
+    // MergeSort mergeTest;
+    // vector<int> vec = {1,5,6,3,2,7};
+    // mergeTest.mergeSort(vec, 0, vec.size()-1);
+    // for (int i = 0; i < vec.size(); i++) {
+    //     cout << vec[i] << " ";
+    // }
 
     //sample scores just to test minHeap
     vector<int> scores = {46, 90, 73, 82, 99, 46};
