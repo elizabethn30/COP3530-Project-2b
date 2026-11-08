@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
-// #include <string>
+#include <string>
+#include <vector>
 // #include <fstream>
 using namespace std;
 
@@ -13,6 +14,7 @@ private:
 public:
     dataPulling();
     void readFile();
+    // vector<string> getDataset();
 
     // ~dataPulling();
 };
