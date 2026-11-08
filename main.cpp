@@ -3,10 +3,9 @@
 #include "mergeSort.h"
 #include <iostream>
 #include <vector>
-#include "mergeSort.h"
-#include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <string>
 // #include <fstream>
 using namespace std;
 
@@ -263,13 +262,6 @@ int main() {
                 sf::FloatRect exitGenreButtonBounds = exitGenreButton.getGlobalBounds();
                 sf::Vector2i mouseLocalPositionGenre = sf::Mouse::getPosition(genreWindow); // Local position (relative to welcome window)
 
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && exitGenreButtonBounds.contains({float(mouseLocalPositionGenre.x), float(mouseLocalPositionGenre.y)})) {
-                    cout << "Button pressed in exitButton bounds" << endl;
-                    genreWindow.setVisible(false);
-                    genreWindow.close();
-                    welcomeWindow.setVisible(false);
-                    welcomeWindow.close();
-                }
 
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && homeButtonBounds.contains({float(mouseLocalPositionGenre.x), float(mouseLocalPositionGenre.y)})) {
                     cout << "Button pressed in exitButton bounds" << endl;
@@ -277,6 +269,17 @@ int main() {
                     genreWindow.close();
                     welcomeWindow.setVisible(true);
                 }
+
+                // Maybe make a flag for genreWindow and welcomeWindow for exit button
+                // Exit button on genre screen SHOULD close out of both welcome window AND genre windows
+                // Does not close out right now
+                // if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && exitGenreButtonBounds.contains({float(mouseLocalPositionGenre.x), float(mouseLocalPositionGenre.y)})) {
+                //     cout << "Button pressed in exitButton bounds" << endl;
+                //     genreWindow.setVisible(false);
+                //     genreWindow.close();
+                //     welcomeWindow.setVisible(false);
+                //     welcomeWindow.close();
+                // }
 
                 genreWindow.display(); // Need
             }
