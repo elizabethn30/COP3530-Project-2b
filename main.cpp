@@ -92,6 +92,8 @@ int main() {
     goText.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
     goText.setPosition({650.f, 395.f});
 
+    // TODO: Make the user input box for user to type in genre they want
+
     while (welcomeWindow.isOpen()) { // Welcome window is open
 
         while (const std::optional event = welcomeWindow.pollEvent()) { // Checks events
@@ -223,6 +225,8 @@ int main() {
             sf::RectangleShape line5({550.f, 2.f});
             line5.setFillColor(sf::Color::Black);
             line5.setPosition({130.f, 470.f});
+
+            // TODO: Draw the song name, score, and rank out onto the window
 
             while (genreWindow.isOpen()) { // Genre window is open
                 welcomeWindow.setVisible(false);
