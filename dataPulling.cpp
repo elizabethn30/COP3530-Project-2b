@@ -25,13 +25,13 @@ static bool readRow(istream & file, vector<string>& columns) {
             }
         } else if (ch == ',' && !inQuotes) {
             //finishes with column
-            coulumns.push_back(text);
+            columns.push_back(text);
             text.clear();
-        } else if (ch == "\n" && !inQuotes) {
+        } else if (ch == '\n' && !inQuotes) {
             //finishes reading row
             columns.push_back(text);
             return true;
-        } else if (ch != "\r") {
+        } else if (ch != '\r') {
             text += ch;
         }
     }
@@ -73,7 +73,7 @@ vector<Song> dataPulling::readFile() {
         song.artist = columns[2];
         song.title = columns[4];
         song.popularityScore = popularity;
-        songs. genre = columns[20];
+        songs.genre = columns[20];
         songs.push_back(song);
     }
 
