@@ -267,6 +267,21 @@ int main() {
             line5.setPosition({130.f, 470.f});
 
             // TODO: Draw the song name, score, and rank out onto the window
+            const vector<Song> topSongs = rankByGenre(songs, genre, 5);
+            vector<sf::Text> rankingText;
+            float rowY = line0.getPosition().y + 4.f;
+            int place = 1;
+            for (const Song& song : topSongs) {
+                const string titleArtist = song.title + "\n" + song.artist;
+                rankingText.emplace_back(font, sf::String::fromUtf8(titleArtist.begin(), titleArtist.end()), 16);
+                rankingText.back().setPosition({135.f, rowY});
+                rankingText.emplace_back(font, to_string(song.popularityScore), 18);
+                rankingText.back().setPosition({420.f, rowY + 8.f});
+                rankingText.emplace_back(font, to_string(place), 18);
+                rankingText.back().setPosition({640.f, rowY + 8.f});
+                rowY +=50.f;
+                place++;
+            }
 
             while (genreWindow.isOpen()) { // Genre window is open
                 welcomeWindow.setVisible(false);
@@ -296,6 +311,9 @@ int main() {
                 genreWindow.draw(line3);
                 genreWindow.draw(line4);
                 genreWindow.draw(line5);
+                for (const sf::Text& text : rankingText) {
+                    genreWindow.draw(text);
+                }
 
                 sf::FloatRect homeButtonBounds = homeButton.getGlobalBounds();
                 sf::FloatRect exitGenreButtonBounds = exitGenreButton.getGlobalBounds();
