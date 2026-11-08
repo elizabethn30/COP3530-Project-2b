@@ -2,6 +2,7 @@
 #include "minHeap.h"
 #include "mergeSort.h"
 #include <iostream>
+#include <set>
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -13,6 +14,14 @@ int main() {
     // Just testing out the dataPulling class to make sure it works
     dataPulling example;
     const vector<Song> songs = example.readFile();
+
+    set<string> genres;
+    for (const Song& song : songs) {
+        if (!song.genre.empty()) {
+            genres.insert(song. genre);
+        }
+    }
+
     cout <<"Loaded" << songs.size() << " songs" << endl;
     if (!songs.empty()) {
         const Song& first = songs.front();
@@ -93,12 +102,26 @@ int main() {
     goText.setPosition({650.f, 395.f});
 
     // TODO: Make the user input box for user to type in genre they want
+    sf::Text genreInput(font);
+    genreInput.setCharacterSize(20);
+    genreInput.setPosition({100.f, 130.f});
 
     while (welcomeWindow.isOpen()) { // Welcome window is open
 
         while (const std::optional event = welcomeWindow.pollEvent()) { // Checks events
             if (event->is<sf::Event::Closed>()) { // Closes window if close button pressed
                 welcomeWindow.close();
+            }
+            if (const auto* typed = event->getIf<sf::Event::TextEntered>()) {
+                if (typed->unicode == 8 && !genre.empty()) {
+                    genre.pop_back();
+                } else if (typed->unicode >= 32 && typed->unicode <= 126) {
+                    char letter = static_cast<char>(typed->unicode);
+                    if (letter >= 'A && letter <= 'Z) {
+                        letter = static_cast<char>(letter = 'A' + 'a');
+                    }
+                    genre += letter;
+                }
             }
         }
 
@@ -107,6 +130,23 @@ int main() {
         // Draws everything onto the welcome window
         welcomeWindow.draw(titleText);
         welcomeWindow.draw(questionText);
+        //search box
+        string label = "Type a genre: " + genre + "\n\n";
+        int shown = 0;
+        for (const string& name : genres) {
+            if (name.find(genre) == 0) {
+                label += name + "\n";
+                shown++;
+                if (shown == 5) {
+                    break;
+                }
+            }
+        }
+        if (shown == 0) {
+            label += "No matching genres";
+        }
+        genreInput.setString(label);
+        welcomeWindow.draw(genreInput);
         welcomeWindow.draw(goButton);
         welcomeWindow.draw(exitButton);
         welcomeWindow.draw(exitText);
@@ -123,7 +163,7 @@ int main() {
 
         // Goes to next window if goButton pressed
         sf::FloatRect goButtonBounds = goButton.getGlobalBounds();
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && goButtonBounds.contains({float(mouseLocalPosition.x), float(mouseLocalPosition.y)})) {
+        if (genres.count(genre) > 0 && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && goButtonBounds.contains({float(mouseLocalPosition.x), float(mouseLocalPosition.y)})) {
             cout << "Button pressed in goButton bounds" << endl;
             // Draw genre window here (new window)
             sf::RenderWindow genreWindow(sf::VideoMode({800, 680}), "Genre Window");
@@ -133,7 +173,7 @@ int main() {
             genreTitle.setFillColor(sf::Color::White);
             genreTitle.setCharacterSize(24);
             genreTitle.setStyle(sf::Text::Regular);
-            genreTitle.setString("Genre Ranked");
+            genreTitle.setString("Top" + genre + "Songs");
             genreTitle.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
             genreTitle.setPosition({345.f, 100.f});
 
