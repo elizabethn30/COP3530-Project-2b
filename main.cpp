@@ -117,7 +117,7 @@ int main() {
                     genre.pop_back();
                 } else if (typed->unicode >= 32 && typed->unicode <= 126) {
                     char letter = static_cast<char>(typed->unicode);
-                    if (letter >= 'A && letter <= 'Z) {
+                    if (letter >= 'A' && letter <= 'Z') {
                         letter = static_cast<char>(letter = 'A' + 'a');
                     }
                     genre += letter;
