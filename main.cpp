@@ -21,14 +21,8 @@ int main() {
 
     // Testing out the Merge Sort
     MergeSort mergeTest;
-    // vector<int> vec = {1,5,6,3,2,7};
-    // cout << "Merge Sort should be outputted: " << endl;
-    // mergeTest.mergeSort(vec, 0, 5);
-    // for (int i = 0; i < vec.size(); i++) {
-    //     cout << vec[i] << " ";
-    // }
-    // vector<Song> testMergeSort = mergeTest.genreSort(songs, "Afrobeat");
-    // cout << testMergeSort[0].popularityScore << endl;
+    vector<Song> testMergeSort = mergeTest.genreSort(songs, "afrobeat");
+    cout << testMergeSort[0].genre << endl;
 
     //sample scores just to test minHeap
     vector<int> scores = {46, 90, 73, 82, 99, 46};

@@ -17,7 +17,6 @@ vector<Song> MergeSort::genreSort(vector<Song> vec, string genre) {
     for (int i = 0; i < vec.size(); i++) {
         if (vec[i].genre == genre) {
             genreSorted.push_back(vec[i]);
-            // cout << genreSorted[i].popularityScore << " ";
         }
     }
     return genreSorted;
