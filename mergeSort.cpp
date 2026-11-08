@@ -1,5 +1,6 @@
 #include "dataPulling.h"
 #include "mergeSort.h"
+#include "song.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -10,11 +11,23 @@ MergeSort::MergeSort() {
 
 };
 
+// Does vec need to be passed by reference?
+vector<Song> MergeSort::genreSort(vector<Song> vec, string genre) {
+    vector<Song> genreSorted;
+    for (int i = 0; i < vec.size(); i++) {
+        if (vec[i].genre == genre) {
+            genreSorted.push_back(vec[i]);
+            // cout << genreSorted[i].popularityScore << " ";
+        }
+    }
+    return genreSorted;
+}
+
 // Reference: Used Slide 52 of the Sorting lecture slides for merge sort
 // Redo of Merge Sort
-void MergeSort::helperMerge(vector<int> &vec, int left, int mid, int right) {
-    vector<int> leftVec;
-    vector<int> rightVec;
+void MergeSort::helperMerge(vector<Song> &vec, int left, int mid, int right) {
+    vector<Song> leftVec;
+    vector<Song> rightVec;
     int leftVecSize;
     int rightVecSize;
 
@@ -47,7 +60,7 @@ void MergeSort::helperMerge(vector<int> &vec, int left, int mid, int right) {
     int vecIndex = left;
     // Keeps going until one vector has gone through all of its elements
     while (sortingLeftIndex < leftVecSize && sortingRightIndex < rightVecSize) {
-        if (leftVec[sortingLeftIndex] <= rightVec[sortingRightIndex]) {
+        if (leftVec[sortingLeftIndex].popularityScore <= rightVec[sortingRightIndex].popularityScore) {
             vec[vecIndex] = leftVec[sortingLeftIndex];
             sortingLeftIndex++;
             vecIndex++;
@@ -75,7 +88,7 @@ void MergeSort::helperMerge(vector<int> &vec, int left, int mid, int right) {
 }
 
 // Should split the original vector up until we are left with only individual elements
-void MergeSort::mergeSort(vector<int> &vec, int left, int right) {
+void MergeSort::mergeSort(vector<Song> &vec, int left, int right) {
     int mid;
 
     while (left < right) {
