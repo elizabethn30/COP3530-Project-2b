@@ -1,20 +1,22 @@
 #include "dataPulling.h"
 #include "minHeap.h"
-#include <iostream>
-#include <vector>
-// #include <string>
 #include "mergeSort.h"
+#include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <string>
 // #include <fstream>
 using namespace std;
 
 int main() {
     // Just testing out the dataPulling class to make sure it works
     dataPulling example;
-    example.readFile();
+    const vector<Song> songs = example.readFile();
+    cout <<"Loaded" << songs.size() << " songs" << endl;
+    if (!songs.empty()) {
+        const Song& first = songs.front();
+        cout << first.title << ", " << first.artist << "..." << first.popularityScore << "-" << first.genre << endl;
+    }
 
     // Testing out the Merge Sort
     MergeSort mergeTest;

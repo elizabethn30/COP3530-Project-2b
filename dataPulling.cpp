@@ -73,7 +73,7 @@ vector<Song> dataPulling::readFile() {
         song.artist = columns[2];
         song.title = columns[4];
         song.popularityScore = popularity;
-        songs.genre = columns[20];
+        song.genre = columns[20];
         songs.push_back(song);
     }
 
