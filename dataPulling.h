@@ -2,6 +2,8 @@
 #include "song.h"
 #include <iostream>
 #include <vector>
+#include <string>
+#include <vector>
 // #include <fstream>
 using namespace std;
 
