@@ -1,5 +1,7 @@
 #pragma once
+#include "song.h"
 #include <iostream>
+#include <vector>
 #include <string>
 #include <vector>
 // #include <fstream>
@@ -13,8 +15,7 @@ private:
     int name;
 public:
     dataPulling();
-    void readFile();
-    // vector<string> getDataset();
+    vector<Song> readFile();
 
     // ~dataPulling();
 };
