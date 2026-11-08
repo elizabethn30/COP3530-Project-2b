@@ -40,3 +40,20 @@ vector<int> topKByPopularity(const vector<int>& scores, int k) {
     }
     return result;
 }
+
+vector<Song> rankByGenre(const vector<Song>& songs, const string& genre, int k) {
+    vector<int> scores;
+    vector<int> matchingIndices;
+    for (int i=0; i < static_cast<int>(song.size()); i++) {
+        if (songs[i].genre == genre) {
+            scores.push_back(songs[i].popularityScore);
+            matchingIndices.push_back(i);
+        }
+    }
+
+    vector<Song> rankedSongs;
+    for (int index : topKByPopularity(socres, k)) {
+        rankedSongs.push_back(songs[matchingIndices[index]]);
+    }
+    return rankedSongs;
+}
