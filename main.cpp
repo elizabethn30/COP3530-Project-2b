@@ -11,7 +11,6 @@ using namespace std;
 int main() {
     string genre; // Gets input from the user on the welcome window; determines which genre for genre window
 
-    // Just testing out the dataPulling class to make sure it works
     dataPulling example;
     const vector<Song> songs = example.readFile();
 
@@ -30,8 +29,15 @@ int main() {
 
     // Testing out the Merge Sort
     MergeSort mergeTest;
-    vector<Song> testMergeSort = mergeTest.genreSort(songs, "afrobeat");
-    cout << testMergeSort[0].genre << endl;
+    vector<Song> testGenreMergeSort = mergeTest.genreSort(songs, "afrobeat");
+    mergeTest.mergeSort(testGenreMergeSort, 0, int(testGenreMergeSort.size())-1);
+    vector<Song> testGenreTop5MergeSort = mergeTest.getTop5MergeSort(testGenreMergeSort);
+    // for (int i = 0; i < testGenreMergeSort.size(); i++) {
+    //     cout << testGenreMergeSort[i].popularityScore << endl;
+    // }
+    // for (int i = 0; i < testGenreTop5MergeSort.size(); i++) {
+    //     cout << testGenreTop5MergeSort[i].popularityScore << endl;
+    // }
 
     //sample scores just to test minHeap
     vector<int> scores = {46, 90, 73, 82, 99, 46};
@@ -64,7 +70,7 @@ int main() {
     questionText.setCharacterSize(24);
     questionText.setStyle(sf::Text::Regular);
     questionText.setString("What Genre Are You Listening To?");
-    questionText.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+    questionText.setOrigin(sf::Vector2f({24.f, 24.f}));
     questionText.setPosition({210.f, 100.f});
 
     // Exit button on welcome screen
@@ -85,7 +91,7 @@ int main() {
     exitText.setCharacterSize(24);
     exitText.setStyle(sf::Text::Regular);
     exitText.setString("Exit");
-    exitText.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+    exitText.setOrigin(sf::Vector2f({24.f, 24.f}));
     exitText.setPosition({182.f, 395.f});
 
     // Go text on welcome screen (on top of go button)
@@ -94,7 +100,7 @@ int main() {
     goText.setCharacterSize(24);
     goText.setStyle(sf::Text::Regular);
     goText.setString("Go");
-    goText.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+    goText.setOrigin(sf::Vector2f({24.f, 24.f}));
     goText.setPosition({650.f, 395.f});
 
     // TODO: Make the user input box for user to type in genre they want
@@ -152,7 +158,6 @@ int main() {
         sf::FloatRect exitButtonBounds = exitButton.getGlobalBounds();
         sf::Vector2i mouseLocalPosition = sf::Mouse::getPosition(welcomeWindow); // Local position (relative to welcome window)
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && exitButtonBounds.contains({float(mouseLocalPosition.x), float(mouseLocalPosition.y)})) {
-            cout << "Button pressed in exitButton bounds" << endl;
             welcomeWindow.setVisible(false);
             welcomeWindow.close();
         }
@@ -160,7 +165,6 @@ int main() {
         // Goes to next window if goButton pressed
         sf::FloatRect goButtonBounds = goButton.getGlobalBounds();
         if (genres.count(genre) > 0 && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && goButtonBounds.contains({float(mouseLocalPosition.x), float(mouseLocalPosition.y)})) {
-            cout << "Button pressed in goButton bounds" << endl;
             // Draw genre window here (new window)
             sf::RenderWindow genreWindow(sf::VideoMode({800, 680}), "Genre Window");
 
@@ -170,7 +174,7 @@ int main() {
             genreTitle.setCharacterSize(24);
             genreTitle.setStyle(sf::Text::Regular);
             genreTitle.setString("Top" + genre + "Songs");
-            genreTitle.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+            genreTitle.setOrigin(sf::Vector2f({24.f, 24.f}));
             genreTitle.setPosition({345.f, 100.f});
 
             // Make genre window home button to go back to welcome window
@@ -191,7 +195,7 @@ int main() {
             genreHome.setCharacterSize(24);
             genreHome.setStyle(sf::Text::Regular);
             genreHome.setString("Home");
-            genreHome.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+            genreHome.setOrigin(sf::Vector2f({24.f, 24.f}));
             genreHome.setPosition({132.f, 595.f});
 
             // Make "Exit" text for genre window's exit button
@@ -200,7 +204,7 @@ int main() {
             genreExit.setCharacterSize(24);
             genreExit.setStyle(sf::Text::Regular);
             genreExit.setString("Exit");
-            genreExit.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+            genreExit.setOrigin(sf::Vector2f({24.f, 24.f}));
             genreExit.setPosition({667.f, 595.f});
 
             // From now until start of while loop, we are making the box of the ranked songs in the genre
@@ -215,7 +219,7 @@ int main() {
             songTitle.setCharacterSize(24);
             songTitle.setStyle(sf::Text::Regular);
             songTitle.setString("Song Title");
-            songTitle.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+            songTitle.setOrigin(sf::Vector2f({24.f, 24.f}));
             songTitle.setPosition({150.f, 200.f});
 
             // Make "Score" text for genre window's ranking box
@@ -224,7 +228,7 @@ int main() {
             score.setCharacterSize(24);
             score.setStyle(sf::Text::Regular);
             score.setString("Score");
-            score.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+            score.setOrigin(sf::Vector2f({24.f, 24.f}));
             score.setPosition({430.f, 200.f});
 
             // Make "Rank" text for genre window's ranking box
@@ -233,7 +237,7 @@ int main() {
             rank.setCharacterSize(24);
             rank.setStyle(sf::Text::Regular);
             rank.setString("Rank");
-            rank.setOrigin(sf::Vector2f({24.f, 24.f})); // This line might not actually do anything
+            rank.setOrigin(sf::Vector2f({24.f, 24.f}));
             rank.setPosition({650.f, 200.f});
 
             // Make the lines in genre window's ranking box for list to sit on
@@ -316,7 +320,6 @@ int main() {
                 sf::Vector2i mouseLocalPositionGenre = sf::Mouse::getPosition(genreWindow); // Local position (relative to welcome window)
 
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && exitGenreButtonBounds.contains({float(mouseLocalPositionGenre.x), float(mouseLocalPositionGenre.y)})) {
-                    cout << "Button pressed in exitButton bounds" << endl;
                     genreWindow.setVisible(false);
                     genreWindow.close();
                     welcomeWindow.setVisible(false);
@@ -324,7 +327,6 @@ int main() {
                 }
 
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && homeButtonBounds.contains({float(mouseLocalPositionGenre.x), float(mouseLocalPositionGenre.y)})) {
-                    cout << "Button pressed in exitButton bounds" << endl;
                     genreWindow.setVisible(false);
                     genreWindow.close();
                     welcomeWindow.setVisible(true);

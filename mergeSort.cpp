@@ -22,7 +22,7 @@ vector<Song> MergeSort::genreSort(vector<Song> vec, string genre) {
     return genreSorted;
 }
 
-// Reference: Used Slide 52 of the Sorting lecture slides for merge sort
+// Reference: Used Slide 52 of the Sorting lecture slides as guide for merge sort
 // Redo of Merge Sort
 void MergeSort::helperMerge(vector<Song> &vec, int left, int mid, int right) {
     vector<Song> leftVec;
@@ -90,11 +90,20 @@ void MergeSort::helperMerge(vector<Song> &vec, int left, int mid, int right) {
 void MergeSort::mergeSort(vector<Song> &vec, int left, int right) {
     int mid;
 
-    while (left < right) {
+    if (left < right) {
         mid = left + (right - left) / 2;
         mergeSort(vec, left, mid); // Sort the left side
         mergeSort(vec, mid + 1, right); // Sort the right side
         helperMerge(vec, left, mid, right); // Combine the two vectors
-        left++;
+        // left++;
     }
+}
+
+// Input the merge sorted vector and get back only the top 5 for the ranking
+vector<Song> MergeSort::getTop5MergeSort(vector<Song> &vec) {
+    vector<Song> top5MergeSort;
+    for (int i = 1; i < 6; i++) {
+        top5MergeSort.push_back(vec[vec.size()-i]);
+    }
+    return top5MergeSort;
 }
