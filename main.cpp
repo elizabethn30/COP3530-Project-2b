@@ -1,11 +1,9 @@
 #include "dataPulling.h"
 #include "minHeap.h"
 #include "mergeSort.h"
-#include <iostream>
 #include <set>
 #include <vector>
 #include <chrono>
-#include <ctime>
 #include <ratio>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -24,33 +22,28 @@ int main() {
         }
     }
 
-    cout <<"Loaded" << songs.size() << " songs" << endl;
-    if (!songs.empty()) {
-        const Song& first = songs.front();
-        cout << first.title << ", " << first.artist << "..." << first.popularityScore << "-" << first.genre << endl;
-    }
-
-    // Testing out the Merge Sort
-    MergeSort mergeTest;
-    vector<Song> testGenreMergeSort = mergeTest.genreSort(songs, "afrobeat");
-    mergeTest.mergeSort(testGenreMergeSort, 0, int(testGenreMergeSort.size())-1);
-    vector<Song> testGenreTopMergeSort = mergeTest.getTopMergeSort(testGenreMergeSort, 5);
-    // for (int i = 0; i < testGenreMergeSort.size(); i++) {
-    //     cout << testGenreMergeSort[i].popularityScore << endl;
+    // Tests
+    // cout <<"Loaded" << songs.size() << " songs" << endl;
+    // if (!songs.empty()) {
+    //     const Song& first = songs.front();
+    //     cout << first.title << ", " << first.artist << "..." << first.popularityScore << "-" << first.genre << endl;
     // }
-    // for (int i = 0; i < testGenreTop5MergeSort.size(); i++) {
-    //     cout << testGenreTop5MergeSort[i].popularityScore << endl;
+    //
+    // // Testing out the Merge Sort
+    // MergeSort mergeTest;
+    // vector<Song> testGenreMergeSort = mergeTest.genreSort(songs, "afrobeat");
+    // mergeTest.mergeSort(testGenreMergeSort, 0, int(testGenreMergeSort.size())-1);
+    // vector<Song> testGenreTopMergeSort = mergeTest.getTopMergeSort(testGenreMergeSort, 5);
+    //
+    // //sample scores just to test minHeap
+    // vector<int> scores = {46, 90, 73, 82, 99, 46};
+    // int k = 3;
+    // vector<int> rankedSongs = topKByPopularity(scores, k);
+    // cout<< "Top" << k << "songs:" << endl;
+    // for (int rank = 0; rank < static_cast<int>(rankedSongs.size()); rank++) {
+    //     int index = rankedSongs[rank];
+    //     cout << rank + 1 << "Song index: " << index << "\nPopularity: " << scores[index] << endl;
     // }
-
-    //sample scores just to test minHeap
-    vector<int> scores = {46, 90, 73, 82, 99, 46};
-    int k = 3;
-    vector<int> rankedSongs = topKByPopularity(scores, k);
-    cout<< "Top" << k << "songs:" << endl;
-    for (int rank = 0; rank < static_cast<int>(rankedSongs.size()); rank++) {
-        int index = rankedSongs[rank];
-        cout << rank + 1 << "Song index: " << index << "\nPopularity: " << scores[index] << endl;
-    }
 
     // Creating the welcome window
     // Reference: Used SFML documentation online to do user interface (https://www.sfml-dev.org/tutorials/3.1/)
@@ -106,7 +99,6 @@ int main() {
     goText.setOrigin(sf::Vector2f({24.f, 24.f}));
     goText.setPosition({650.f, 395.f});
 
-    // TODO: Make the user input box for user to type in genre they want
     sf::Text genreInput(font);
     genreInput.setCharacterSize(20);
     genreInput.setPosition({100.f, 130.f});
@@ -144,7 +136,7 @@ int main() {
             }
         }
 
-        welcomeWindow.clear(sf::Color::Black); // Need
+        welcomeWindow.clear(sf::Color::Black);
 
         // Draws everything onto the welcome window
         welcomeWindow.draw(titleText);
@@ -285,14 +277,13 @@ int main() {
             line5.setFillColor(sf::Color::Black);
             line5.setPosition({130.f, 470.f});
 
-            // Reference: Used cplusplus.com for chrono library syntax (https://cplusplus.com/reference/chrono/steady_clock/)
-            std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+            // Reference: Used cplusplus.com for help with chrono library syntax (https://cplusplus.com/reference/chrono/steady_clock/)
+            chrono::steady_clock::time_point start = chrono::steady_clock::now();
             const vector<Song> topSongs = rankByGenre(songs, genre, songCount);
-            std::chrono::steady_clock::time_point stop = std::chrono::steady_clock::now();
-            std::chrono::duration<double> elapsed_time = stop - start;
+            chrono::steady_clock::time_point stop = chrono::steady_clock::now();
+            chrono::duration<double> elapsed_time = stop - start;
             string elapsedMinHeapTime = to_string(elapsed_time.count());
             string minHeapElapsed = "Min-Heap took: " + elapsedMinHeapTime + "s";
-            sf::Text minHeapTime(font);
 
             vector<sf::Text> rankingText;
             float rowY = line0.getPosition().y + 4.f;
@@ -311,17 +302,19 @@ int main() {
 
             // Timed Merge Sort version
             MergeSort rankedSongs;
-            std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+            chrono::steady_clock::time_point begin = chrono::steady_clock::now();
             vector<Song> genreMergeSort = rankedSongs.genreSort(songs, genre);
             rankedSongs.mergeSort(genreMergeSort, 0, int(genreMergeSort.size())-1);
             vector<Song> genreTop5MergeSort = rankedSongs.getTopMergeSort(genreMergeSort, songCount);
-            std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-            std::chrono::duration<double> elapsed_seconds = end - begin;
+            chrono::steady_clock::time_point end = chrono::steady_clock::now();
+            chrono::duration<double> elapsed_seconds = end - begin;
             string elapsedMergeSortTime = to_string(elapsed_seconds.count());
             string mergeSortElapsed = "Merge Sort took: " + elapsedMergeSortTime + "s";
-            sf::Text mergeSortTime(font);
 
             // Time comparison between min heap and merge sort
+            sf::Text minHeapTime(font);
+            sf::Text mergeSortTime(font);
+
             minHeapTime.setFillColor(sf::Color::White);
             minHeapTime.setCharacterSize(18);
             minHeapTime.setStyle(sf::Text::Regular);
@@ -346,7 +339,7 @@ int main() {
                     }
                 }
 
-                genreWindow.clear(sf::Color::Black); // Need
+                genreWindow.clear(sf::Color::Black);
 
                 // Draws everything onto the genre window
                 genreWindow.draw(genreTitle);
@@ -387,12 +380,12 @@ int main() {
                     welcomeWindow.setVisible(true);
                 }
 
-                genreWindow.display(); // Need
+                genreWindow.display();
             }
 
         }
 
-        welcomeWindow.display(); // Need
+        welcomeWindow.display();
     }
 
     return 0;

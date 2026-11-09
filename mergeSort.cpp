@@ -72,7 +72,6 @@ void MergeSort::helperMerge(vector<Song> &vec, int left, int mid, int right) {
     }
 
     // Puts any leftover elements into original 'vec' vector
-    // Left and right vectors should both be sorted, so all elements in left vector are LESS than all elements in right vector
     while (sortingLeftIndex < leftVecSize) { // Leftover elements from left vector
         vec[vecIndex] = leftVec[sortingLeftIndex];
         sortingLeftIndex++;
@@ -99,7 +98,7 @@ void MergeSort::mergeSort(vector<Song> &vec, int left, int right) {
     }
 }
 
-// Input the merge sorted vector and get back only the top 5 for the ranking
+// Input the merge sorted vector and get back only most popular songs for the ranking
 vector<Song> MergeSort::getTopMergeSort(vector<Song> &vec, int count) {
     vector<Song> topMergeSort;
     int end = count + 1;
