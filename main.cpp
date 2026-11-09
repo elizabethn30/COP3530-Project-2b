@@ -107,7 +107,7 @@ int main() {
     int songCount = 5;
     sf::Text songCountText(font);
     songCountText.setCharacterSize(20);
-    songCountText.setPosition({100.f, 300.f});
+    songCountText.setPosition({100.f, 320.f});
 
     while (welcomeWindow.isOpen()) { // Welcome window is open
 
@@ -184,7 +184,7 @@ int main() {
             genreTitle.setFillColor(sf::Color::White);
             genreTitle.setCharacterSize(24);
             genreTitle.setStyle(sf::Text::Regular);
-            genreTitle.setString("Top" + genre + "Songs");
+            genreTitle.setString("Top " + genre + " Songs");
             genreTitle.setOrigin(sf::Vector2f({24.f, 24.f}));
             genreTitle.setPosition({345.f, 100.f});
 
