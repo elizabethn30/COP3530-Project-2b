@@ -4,6 +4,9 @@
 #include <iostream>
 #include <set>
 #include <vector>
+#include <chrono>
+#include <ctime>
+#include <ratio>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 using namespace std;
@@ -31,7 +34,7 @@ int main() {
     MergeSort mergeTest;
     vector<Song> testGenreMergeSort = mergeTest.genreSort(songs, "afrobeat");
     mergeTest.mergeSort(testGenreMergeSort, 0, int(testGenreMergeSort.size())-1);
-    vector<Song> testGenreTop5MergeSort = mergeTest.getTop5MergeSort(testGenreMergeSort);
+    vector<Song> testGenreTopMergeSort = mergeTest.getTopMergeSort(testGenreMergeSort, 5);
     // for (int i = 0; i < testGenreMergeSort.size(); i++) {
     //     cout << testGenreMergeSort[i].popularityScore << endl;
     // }
@@ -282,8 +285,15 @@ int main() {
             line5.setFillColor(sf::Color::Black);
             line5.setPosition({130.f, 470.f});
 
-            // TODO: Draw the song name, score, and rank out onto the window
+            // Reference: Used cplusplus.com for chrono library syntax (https://cplusplus.com/reference/chrono/steady_clock/)
+            std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
             const vector<Song> topSongs = rankByGenre(songs, genre, songCount);
+            std::chrono::steady_clock::time_point stop = std::chrono::steady_clock::now();
+            std::chrono::duration<double> elapsed_time = stop - start;
+            string elapsedMinHeapTime = to_string(elapsed_time.count());
+            string minHeapElapsed = "Min-Heap took: " + elapsedMinHeapTime + "s";
+            sf::Text minHeapTime(font);
+
             vector<sf::Text> rankingText;
             float rowY = line0.getPosition().y + 4.f;
             int place = 1;
@@ -298,6 +308,33 @@ int main() {
                 rowY +=50.f;
                 place++;
             }
+
+            // Timed Merge Sort version
+            MergeSort rankedSongs;
+            std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+            vector<Song> genreMergeSort = rankedSongs.genreSort(songs, genre);
+            rankedSongs.mergeSort(genreMergeSort, 0, int(genreMergeSort.size())-1);
+            vector<Song> genreTop5MergeSort = rankedSongs.getTopMergeSort(genreMergeSort, songCount);
+            std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+            std::chrono::duration<double> elapsed_seconds = end - begin;
+            string elapsedMergeSortTime = to_string(elapsed_seconds.count());
+            string mergeSortElapsed = "Merge Sort took: " + elapsedMergeSortTime + "s";
+            sf::Text mergeSortTime(font);
+
+            // Time comparison between min heap and merge sort
+            minHeapTime.setFillColor(sf::Color::White);
+            minHeapTime.setCharacterSize(18);
+            minHeapTime.setStyle(sf::Text::Regular);
+            minHeapTime.setString(minHeapElapsed);
+            minHeapTime.setOrigin(sf::Vector2f({18.f, 18.f}));
+            minHeapTime.setPosition({80.f, 140.f});
+
+            mergeSortTime.setFillColor(sf::Color::White);
+            mergeSortTime.setCharacterSize(18);
+            mergeSortTime.setStyle(sf::Text::Regular);
+            mergeSortTime.setString(mergeSortElapsed);
+            mergeSortTime.setOrigin(sf::Vector2f({18.f, 18.f}));
+            mergeSortTime.setPosition({500.f, 140.f});
 
             while (genreWindow.isOpen()) { // Genre window is open
                 welcomeWindow.setVisible(false);
@@ -321,6 +358,8 @@ int main() {
                 genreWindow.draw(songTitle);
                 genreWindow.draw(score);
                 genreWindow.draw(rank);
+                genreWindow.draw(minHeapTime);
+                genreWindow.draw(mergeSortTime);
                 genreWindow.draw(line0);
                 genreWindow.draw(line1);
                 genreWindow.draw(line2);

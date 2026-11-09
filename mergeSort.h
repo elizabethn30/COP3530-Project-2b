@@ -14,5 +14,5 @@ public:
     vector<Song> genreSort(vector<Song> vec, string genre);
     void helperMerge(vector<Song> &vec, int left, int mid, int right);
     void mergeSort(vector<Song> &vec, int left, int right);
-    vector<Song> getTop5MergeSort(vector<Song> &vec);
+    vector<Song> getTopMergeSort(vector<Song> &vec, int count);
 };

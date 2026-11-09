@@ -100,10 +100,11 @@ void MergeSort::mergeSort(vector<Song> &vec, int left, int right) {
 }
 
 // Input the merge sorted vector and get back only the top 5 for the ranking
-vector<Song> MergeSort::getTop5MergeSort(vector<Song> &vec) {
-    vector<Song> top5MergeSort;
-    for (int i = 1; i < 6; i++) {
-        top5MergeSort.push_back(vec[vec.size()-i]);
+vector<Song> MergeSort::getTopMergeSort(vector<Song> &vec, int count) {
+    vector<Song> topMergeSort;
+    int end = count + 1;
+    for (int i = 1; i < end; i++) {
+        topMergeSort.push_back(vec[vec.size()-i]);
     }
-    return top5MergeSort;
+    return topMergeSort;
 }
