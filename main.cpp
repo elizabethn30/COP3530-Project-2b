@@ -108,11 +108,25 @@ int main() {
     genreInput.setCharacterSize(20);
     genreInput.setPosition({100.f, 130.f});
 
+    //Number of songs input
+    int songCount = 5;
+    sf::Text songCountText(font);
+    songCountText.setCharacterSize(20);
+    songCountText.setPosition({100.f, 300.f});
+
     while (welcomeWindow.isOpen()) { // Welcome window is open
 
         while (const std::optional event = welcomeWindow.pollEvent()) { // Checks events
             if (event->is<sf::Event::Closed>()) { // Closes window if close button pressed
                 welcomeWindow.close();
+            }
+            //Up and down keys to choose num songs.
+            if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+                if (key->code == sf::Keyboard::Key::Up && songCount < 5) {
+                    songCount++;
+                } else if (key->code == sf::Keyboard::Key::Down && songCount > 1) {
+                    songCount--;
+                }
             }
             if (const auto* typed = event->getIf<sf::Event::TextEntered>()) {
                 if (typed->unicode == 8 && !genre.empty()) {
@@ -149,6 +163,8 @@ int main() {
         }
         genreInput.setString(label);
         welcomeWindow.draw(genreInput);
+        songCountText.setString("Songs to display: " + to_string(songCount) + "(Up/Down)");
+        welcomeWindow.draw(songCountText);
         welcomeWindow.draw(goButton);
         welcomeWindow.draw(exitButton);
         welcomeWindow.draw(exitText);
@@ -267,7 +283,7 @@ int main() {
             line5.setPosition({130.f, 470.f});
 
             // TODO: Draw the song name, score, and rank out onto the window
-            const vector<Song> topSongs = rankByGenre(songs, genre, 5);
+            const vector<Song> topSongs = rankByGenre(songs, genre, songCount);
             vector<sf::Text> rankingText;
             float rowY = line0.getPosition().y + 4.f;
             int place = 1;
