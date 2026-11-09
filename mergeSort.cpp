@@ -11,7 +11,6 @@ MergeSort::MergeSort() {
 
 };
 
-// Does vec need to be passed by reference?
 vector<Song> MergeSort::genreSort(vector<Song> vec, string genre) {
     vector<Song> genreSorted;
     for (int i = 0; i < vec.size(); i++) {
@@ -23,7 +22,6 @@ vector<Song> MergeSort::genreSort(vector<Song> vec, string genre) {
 }
 
 // Reference: Used Slide 52 of the Sorting lecture slides as guide for merge sort
-// Redo of Merge Sort
 void MergeSort::helperMerge(vector<Song> &vec, int left, int mid, int right) {
     vector<Song> leftVec;
     vector<Song> rightVec;
@@ -85,7 +83,6 @@ void MergeSort::helperMerge(vector<Song> &vec, int left, int mid, int right) {
     }
 }
 
-// Should split the original vector up until we are left with only individual elements
 void MergeSort::mergeSort(vector<Song> &vec, int left, int right) {
     int mid;
 
